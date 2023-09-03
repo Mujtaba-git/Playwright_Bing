@@ -1,0 +1,39 @@
+
+
+gc C:\Certificate\root.crt | ac C:\Certificate\cacert.pem
+gc C:\Certificate\child1.crt | ac C:\Certificate\cacert.pem
+gc C:\Certificate\child2.crt | ac C:\Certificate\cacert.pem
+gc C:\Certificate\child3.crt | ac C:\Certificate\cacert.pem
+
+
+set NODE_EXTRA_CA_CERTS=C:\Certificate\cacert.pem
+
+$env:NODE_EXTRA_CA_CERTS = 'C:\Certificate\cacert.pem'
+
+
+----------------------------------------------------------------------------------------------------------
+You need to do the following,
+
+Visit https://playwright.azureedge.net and download the complete certificate chain
+Let's assume your certificates are stored as root.crt, child1.crt, child2.crt, ... , childN.crt etc. at D:\
+Now create an empty file say D:\cacert.pem and execute the below commands in Powershell,
+gc d:\root.crt | ac d:\cacert.pem
+gc d:\child1.crt | ac d:\cacert.pem
+gc d:\child2.crt | ac d:\cacert.pem
+...
+gc d:\childN.crt | ac d:\cacert.pem
+Now set the NODE_EXTRA_CA_CERTS variable as set NODE_EXTRA_CA_CERTS=D:\caert.pem on command line (or $env:NODE_EXTRA_CA_CERTS = 'D:\caert.pem' in Powershell).
+Now your playwright install command should work properly.
+
+-----------------------------------------------------------------------------------------------------------
+
+C:\Users\amit_tendulkar>d:\venv\amazon\Scripts\activate
+
+(amazon) C:\Users\amit_tendulkar>python -m certifi
+D:\venv\amazon\lib\site-packages\certifi\cacert.pem
+
+(amazon) C:\Users\amit_tendulkar>set NODE_EXTRA_CA_CERTS=D:\venv\amazon\lib\site-packages\certifi\cacert.pem
+
+(amazon) C:\Users\amit_tendulkar>playwright install
+
+-------------------------------------------------------------------------------------------------------------

@@ -1,0 +1,14 @@
+{
+    "chromium": {
+        "headless": false
+
+    },
+    "firefox": {
+        "headless": false
+
+    },
+    "webkit": {
+        "headless": false
+
+    }
+}
